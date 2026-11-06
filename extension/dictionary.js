@@ -1,0 +1,1 @@
+const AVDICT_DATA = [];

@@ -1,0 +1,19 @@
+{
+  "name": "avdict-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-polly": "^3.1156.0",
+    "@aws-sdk/client-transcribe-streaming": "^3.1156.0",
+    "@aws-sdk/client-translate": "^3.1162.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.24.4"
+  }
+}

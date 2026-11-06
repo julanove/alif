@@ -1,0 +1,37 @@
+import express from "express";
+import cors from "cors";
+import dictionaryRoutes from "./routes/dictionary.js";
+import wordsRoutes from "./routes/words.js";
+import postsRoutes from "./routes/posts.js";
+import ttsRoutes from "./routes/tts.js";
+import pronunciationRoutes from "./routes/pronunciation.js";
+import authRoutes from "./routes/auth.js";
+import flashcardRoutes from "./routes/flashcards.js";
+import challengeRoutes from "./routes/challenge.js";
+import translateRoutes from "./routes/translate.js";
+import { attachUser } from "./auth.js";
+import { scrapeGuard } from "./scrapeGuard.js";
+const app = express();
+const PORT = process.env.PORT || 5e3;
+app.use(cors());
+app.set("trust proxy", true);
+app.use(express.json());
+app.use("/api", attachUser);
+app.use("/api", scrapeGuard);
+app.use("/api", dictionaryRoutes);
+app.use("/api", wordsRoutes);
+app.use("/api/posts", postsRoutes);
+app.use("/api", ttsRoutes);
+app.use("/api", pronunciationRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/flashcards", flashcardRoutes);
+app.use("/api", challengeRoutes);
+app.use("/api", translateRoutes);
+app.get("/api/health", (req, res) => res.json({ ok: true }));
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: "Internal server error" });
+});
+app.listen(PORT, () => {
+  console.log(`avdict backend listening on http://localhost:${PORT}`);
+});
